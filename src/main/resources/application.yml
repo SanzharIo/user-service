@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+swagger:
+  gateway: ${GATEWAY:https://localhost:9000/user-service/}
+
+spring:
+  application:
+    name: user-service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres

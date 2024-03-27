@@ -2,10 +2,9 @@ package kz.flurent.config;
 
 import io.jsonwebtoken.*;
 import kz.flurent.model.entity.User;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -14,12 +13,11 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class JwtService {
 
-    private long accessTokenValidity = 60*60*1000;
+    @Value("${access.time}")
+    private long accessTokenValidity;
 
-    private final String secret_key = "mysecretkey";
-
-    private final String TOKEN_HEADER = "Authorization";
-    private final String TOKEN_PREFIX = "Bearer ";
+    @Value("${access.key}")
+    private String secret_key;
 
     public String createToken(User user) {
         Date tokenCreateTime = new Date();
@@ -61,7 +59,9 @@ public class JwtService {
 
     public String resolveToken(HttpServletRequest request) {
 
+        String TOKEN_HEADER = "Authorization";
         String bearerToken = request.getHeader(TOKEN_HEADER);
+        String TOKEN_PREFIX = "Bearer ";
         if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
             return bearerToken.substring(TOKEN_PREFIX.length());
         }

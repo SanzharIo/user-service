@@ -16,6 +16,7 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, UUID>, QuerydslPredicateExecutor<User>, QuerydslBinderCustomizer<QUser> {
 
     Optional<User> findByUsername(String username);
+    boolean existsByUsername(String username);
 
     @Override
     default void customize(

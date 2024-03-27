@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @Data
 @Entity
@@ -41,12 +40,13 @@ public class User extends AuditModel implements UserDetails {
     @Column(name = "block")
     private boolean block = false;
 
-    @Column(name = "email")
-    private String email;
-
     @JoinColumn(name = "role_id")
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Role role;
+
+    @JoinColumn(name = "user_id")
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<OtpRequest> otpRequests = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

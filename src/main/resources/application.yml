@@ -12,3 +12,10 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: postgres
+
+access:
+  time: ${ACCESS_TIME:3600000}
+  key: ${ACCESS_KEY:FMXhpZGDSOioookMXXbaYeWvONaoydra}
+
+clients:
+  mail-service: ${MAIL_SERVICE_URI:http://mail-service}

@@ -5,9 +5,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import kz.flurent.controller.advice.BaseController;
 import kz.flurent.model.entity.User;
 import kz.flurent.model.request.AuthRequest;
+import kz.flurent.model.request.AuthenticationRequest;
+import kz.flurent.model.response.UserResponse;
 import kz.flurent.model.response.errors.ErrorCode;
 import kz.flurent.model.response.errors.ServiceException;
 import kz.flurent.config.JwtService;
+import kz.flurent.service.auth.AuthenticationService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -28,12 +31,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController extends BaseController {
 
     private final AuthenticationManager authenticationManager;
+    private final AuthenticationService authenticationService;
     private JwtService jwtService;
 
     @PostMapping("/signup")
     @Operation(summary = "Зарегистрировать пользователя")
-    public ResponseEntity<Void> register(@RequestBody AuthRequest authRequest) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<UserResponse> register(@RequestBody AuthenticationRequest authRequest) {
+        return ResponseEntity.ok(authenticationService.createUser(authRequest));
     }
 
     @PostMapping("/login")

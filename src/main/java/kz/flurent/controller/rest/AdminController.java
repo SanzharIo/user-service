@@ -32,8 +32,7 @@ public class AdminController {
     @GetMapping("/all")
     @Operation(summary = "Получить всех пользователей", description = "Запрос для получения всех пользователей вне зависимости от их роли")
     public ResponseEntity<Page<UserResponse>> findAllUsers(@ParameterObject @PageableDefault(size = 25, direction = Sort.Direction.DESC) Pageable pageable,
-                                                           @RequestParam Optional<String> search,
-                                                           @RequestParam(required = false) String requestPeriod) {
+                                                           @RequestParam Optional<String> search) {
         Page<UserResponse> all = userService.findAll(pageable, search);
         return ResponseEntity.ok(all);
     }

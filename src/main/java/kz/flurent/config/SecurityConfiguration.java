@@ -41,9 +41,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/actuator/**",
                         "/v3/**"
                 ).permitAll()
-                .antMatchers("/auth/**").permitAll()
-                .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
-                .anyRequest().authenticated();
+//                .antMatchers("/auth/**").permitAll()
+//                .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                .anyRequest().permitAll();
 
         http.exceptionHandling(exceptionHandling ->
                 exceptionHandling

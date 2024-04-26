@@ -1,6 +1,5 @@
 package kz.flurent.controller.rest;
 
-import io.swagger.v3.oas.annotations.Operation;
 import kz.flurent.model.request.RestoreRequest;
 import kz.flurent.model.response.OtpResponse;
 import kz.flurent.model.response.UserResponse;
@@ -23,14 +22,14 @@ public class OtpController {
     }
 
     @PostMapping("/restore")
-    @Operation(summary = "Восстановить аккаунт")
+//    @Operation(summary = "Восстановить аккаунт")
     public ResponseEntity<UserResponse> restore(@RequestBody RestoreRequest restoreRequest) {
         otpService.restoreAccount(restoreRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/restore/message")
-    @Operation(summary = "Отправить сообщение на восстановление аккаунта", description = "Данный запрос нужен только для теста регистрации")
+//    @Operation(summary = "Отправить сообщение на восстановление аккаунта", description = "Данный запрос нужен только для теста регистрации")
     public ResponseEntity<UserResponse> sendRestoreEmail(@RequestParam String email) {
         otpService.sendRestoreMessage(email);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -2,7 +2,7 @@ server:
   port: 8080
 
 swagger:
-  gateway: ${GATEWAY:https://localhost:9000/user-service/}
+  gateway: ${GATEWAY:http://localhost:8082/user-service/}
 
 spring:
   application:
@@ -12,6 +12,10 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: postgres
+  jpa:
+    show-sql: true
+    generate-ddl: true
+
 
 access:
   time: ${ACCESS_TIME:3600000}

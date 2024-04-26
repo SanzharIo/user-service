@@ -1,7 +1,5 @@
 package kz.flurent.controller.rest;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import kz.flurent.controller.advice.BaseController;
 import kz.flurent.model.entity.User;
 import kz.flurent.model.request.AuthRequest;
@@ -26,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
-@Tag(name = "Authentication controller", description = "Контроллер авторизации и входа в систему")
+//@Tag(name = "Authentication controller", description = "Контроллер авторизации и входа в систему")
 @AllArgsConstructor
 public class AuthenticationController extends BaseController {
 
@@ -35,13 +33,13 @@ public class AuthenticationController extends BaseController {
     private JwtService jwtService;
 
     @PostMapping("/signup")
-    @Operation(summary = "Зарегистрировать пользователя")
+//    @Operation(summary = "Зарегистрировать пользователя")
     public ResponseEntity<UserResponse> register(@RequestBody AuthenticationRequest authRequest) {
         return ResponseEntity.ok(authenticationService.createUser(authRequest));
     }
 
     @PostMapping("/login")
-    @Operation(summary = "Войти в систему")
+//    @Operation(summary = "Войти в систему")
     public ResponseEntity<Void> authenticate(@RequestBody AuthRequest authRequest) {
 
         try {

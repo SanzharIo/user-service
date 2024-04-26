@@ -2,6 +2,7 @@ package kz.flurent.service.user;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import kz.flurent.config.AuditorUtils;
+import kz.flurent.methods.PaginationHelper;
 import kz.flurent.model.entity.User;
 import kz.flurent.model.response.UserResponse;
 import kz.flurent.model.response.errors.ErrorCode;
@@ -12,9 +13,11 @@ import kz.flurent.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +33,9 @@ public class UserServiceImp implements UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
     @Override
-    public Page<UserResponse> findAll(Pageable pageable, Optional<String> search) {
+    public Page<UserResponse> findAll(@RequestParam Optional<Integer> page,
+                                      @RequestParam Optional<Integer> size,
+                                      @RequestParam Optional<String[]> sortBy, Optional<String> search) {
         PredicatesBuilder builder = new PredicatesBuilder();
         if (search.isPresent()) {
             Pattern pattern = Pattern.compile("(\\w+?[.]\\w+?|\\w+?)" +
@@ -41,6 +46,7 @@ public class UserServiceImp implements UserService {
                 builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
             }
         }
+        PageRequest pageable = PaginationHelper.paginate(page, size, sortBy);
         BooleanExpression exp = builder.build(User.class);
         Page<User> users = userRepository.findAll(exp, pageable);
         return new PageImpl<>(userMapper.toResponse(users.getContent()), pageable, users.getTotalElements());

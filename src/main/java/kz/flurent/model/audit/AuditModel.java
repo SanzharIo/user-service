@@ -27,10 +27,10 @@ public abstract class AuditModel implements Serializable {
     private Date createdAt = new Date();
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at")
     @LastModifiedDate
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Date updatedAt = new Date();
+    private Date updatedAt;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "deleted_at")
